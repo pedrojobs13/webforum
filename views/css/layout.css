@@ -1,0 +1,77 @@
+.topo {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.topo-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.menu a {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.menu a:hover {
+    color: #93c5fd;
+}
+
+.btn-menu {
+    background: #2563eb;
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
+.btn-menu:hover {
+    background: #1d4ed8;
+    color: white !important;
+}
+
+.btn-sair {
+    background: #dc2626;
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
+.btn-sair:hover {
+    background: #b91c1c;
+    color: white !important;
+}
+
+.rodape {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .topo-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
