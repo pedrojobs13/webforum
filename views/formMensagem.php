@@ -13,8 +13,8 @@ require_once 'includes/cabecalho.inc.php';
 
     <main class="container">
 
-        <a href="areaRestrita.php" class="voltar">
-            ← Voltar para área restrita
+        <a href="../controlers/controlerDashboard.php" class="btn btn-outline">
+            Voltar para área restrita
         </a>
 
         <section class="titulo-pagina">

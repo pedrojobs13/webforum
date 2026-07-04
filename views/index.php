@@ -7,7 +7,6 @@ require_once 'includes/cabecalho.inc.php';
     <main class="container">
 
         <section class="hero">
-            <span class="hero-tag">Fórum interno de mensagens</span>
 
             <h1>WebForum</h1>
 
@@ -24,7 +23,6 @@ require_once 'includes/cabecalho.inc.php';
 
         <section class="cards">
             <div class="card">
-                <div class="card-icon">✉</div>
                 <h3>Envio de mensagens</h3>
                 <p>
                     Envie mensagens para outros usuários já cadastrados no sistema.
@@ -32,7 +30,6 @@ require_once 'includes/cabecalho.inc.php';
             </div>
 
             <div class="card">
-                <div class="card-icon">📥</div>
                 <h3>Caixa de entrada</h3>
                 <p>
                     Visualize suas mensagens recebidas, mostrando remetente e assunto.
@@ -40,7 +37,6 @@ require_once 'includes/cabecalho.inc.php';
             </div>
 
             <div class="card">
-                <div class="card-icon">🔒</div>
                 <h3>Área restrita</h3>
                 <p>
                     Apenas usuários autenticados podem acessar as funcionalidades internas.

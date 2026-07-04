@@ -1,11 +1,15 @@
 <?php
 require_once '../utils/seguranca.inc.php';
+require_once __DIR__ . '/../dao/MensagemDAO.inc.php';
 protegerPagina();
 
 $usuario = getUsuarioLogado();
 
+$totalNaoLidas = $_SESSION['totalNaoLidas'] ?? 0;
+
 $tituloPagina = "WebForum - Área Restrita";
 $paginaCSS = "dashboard.css";
+require_once 'includes/cabecalho.inc.php';
 require_once 'includes/cabecalho.inc.php';
 ?>
 
@@ -17,6 +21,11 @@ require_once 'includes/cabecalho.inc.php';
             <h1>
                 Bem-vindo, <?php echo htmlspecialchars($usuario->nome); ?>!
             </h1>
+
+            <div class="dashboard-contador">
+                <h2>Mensagens não lidas</h2>
+                <p class="numero-dashboard"><?php echo $totalNaoLidas; ?></p>
+            </div>
 
             <p>
                 Nesta área você pode enviar mensagens para usuários cadastrados,
@@ -43,7 +52,13 @@ require_once 'includes/cabecalho.inc.php';
                     e remova mensagens quando necessário.
                 </p>
             </a>
+            <a href="../controlers/controlerMensagem.php?opcao=6" class="dashboard-card">
+                <h2>📤 Mensagens enviadas</h2>
 
+                <p>
+                    Veja as mensagens que você enviou e acompanhe se o destinatário já leu.
+                </p>
+            </a>
         </section>
 
         <section class="dashboard-info">

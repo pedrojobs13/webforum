@@ -53,7 +53,12 @@ if ($opcao == 4) {
     $idMensagem = (int) $_GET['id'];
 
     $mensagemDAO = new MensagemDAO();
+
     $mensagem = $mensagemDAO->buscarMensagemRecebida($idMensagem, $idUsuarioLogado);
+
+    if ($mensagem != null) {
+        $mensagemDAO->marcarComoLida($idMensagem, $idUsuarioLogado);
+    }
 
     $_SESSION['mensagem'] = $mensagem;
 
@@ -68,5 +73,26 @@ if ($opcao == 5) {
     $mensagemDAO->removerMensagem($idMensagem, $idUsuarioLogado);
 
     header("Location: controlerMensagem.php?opcao=3");
+    exit;
+}
+if ($opcao == 6) {
+    $mensagemDAO = new MensagemDAO();
+    $mensagens = $mensagemDAO->listarEnviadas($idUsuarioLogado);
+
+    $_SESSION['mensagensEnviadas'] = $mensagens;
+
+    header("Location: ../views/mensagensEnviadas.php");
+    exit;
+}
+
+if ($opcao == 7) {
+    $idMensagem = (int) $_GET['id'];
+
+    $mensagemDAO = new MensagemDAO();
+    $mensagem = $mensagemDAO->buscarMensagemEnviada($idMensagem, $idUsuarioLogado);
+
+    $_SESSION['mensagemEnviada'] = $mensagem;
+
+    header("Location: ../views/visualizarMensagemEnviada.php");
     exit;
 }

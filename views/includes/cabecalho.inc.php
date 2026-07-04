@@ -17,7 +17,7 @@ $paginaCSS = $paginaCSS ?? null;
 
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
-
+    <script src="js/cabecalho.js" defer></script>
     <?php if ($paginaCSS != null) { ?>
         <link rel="stylesheet" href="css/<?php echo htmlspecialchars($paginaCSS); ?>">
     <?php } ?>
@@ -27,21 +27,32 @@ $paginaCSS = $paginaCSS ?? null;
 
 <header class="topo">
     <div class="topo-container">
-        <a href="index.php" class="logo">WebForum</a>
+
+        <a href="<?php echo $usuarioLogado == null ? 'index.php' : '../controlers/controlerDashboard.php'; ?>" class="logo">
+            WebForum
+        </a>
 
         <nav class="menu">
-            <a href="index.php">Início</a>
 
-            <?php if ($usuarioLogado == null) {
-                ?>
+            <?php if ($usuarioLogado == null) { ?>
+
+                <a href="index.php">Início</a>
                 <a href="formLogin.php">Login</a>
                 <a href="formCadastroUsuario.php" class="btn-menu">Criar conta</a>
-                <?php
-            } else { ?>
-                <a href="areaRestrita.php">Área restrita</a>
-                <a href="../controlers/controlerMensagem.php?opcao=3">Mensagens</a>
+
+            <?php } else { ?>
+
+                <a href="../controlers/controlerDashboard.php">Área restrita</a>
+                <a href="../controlers/controlerMensagem.php?opcao=3">Recebidas</a>
+                <a href="../controlers/controlerMensagem.php?opcao=6">Enviadas</a>
                 <a href="../controlers/controlerUsuario.php?pOpcao=3" class="btn-sair">Sair</a>
+
             <?php } ?>
+
+            <button type="button" onclick="alternarTema()" class="btn-tema" id="btnTema">
+                🌙
+            </button>
+
         </nav>
     </div>
 </header>
