@@ -54,8 +54,9 @@ class MensagemDAO
     public function buscarMensagemRecebida($idMensagem, $idUsuario)
     {
         $sql = $this->con->prepare(
-            "SELECT 
+            "SELECT
                 m.id_mensagem,
+                m.id_remetente,
                 m.assunto,
                 m.corpo,
                 m.data_envio,

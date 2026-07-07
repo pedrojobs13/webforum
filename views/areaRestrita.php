@@ -10,7 +10,6 @@ $totalNaoLidas = $_SESSION['totalNaoLidas'] ?? 0;
 $tituloPagina = "WebForum - Área Restrita";
 $paginaCSS = "dashboard.css";
 require_once 'includes/cabecalho.inc.php';
-require_once 'includes/cabecalho.inc.php';
 ?>
 
     <main class="container">

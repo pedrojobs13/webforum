@@ -4,6 +4,8 @@ require_once '../utils/seguranca.inc.php';
 protegerPagina();
 
 $destinatarios = $_SESSION['destinatarios'] ?? [];
+$destinatarioPreSelecionado = (int) ($_GET['destinatario'] ?? 0);
+$assuntoPreSelecionado = $_GET['assunto'] ?? '';
 
 $tituloPagina = "WebForum - Enviar Mensagem";
 $paginaCSS = "mensagens.css";
@@ -37,6 +39,18 @@ require_once 'includes/cabecalho.inc.php';
 
             <?php } ?>
 
+            <?php if (isset($_GET['erro']) && $_GET['erro'] == 1) { ?>
+                <div class="alerta alerta-erro">
+                    Preencha todos os campos e escolha um destinatário válido.
+                </div>
+            <?php } ?>
+
+            <?php if (isset($_GET['erro']) && $_GET['erro'] == 2) { ?>
+                <div class="alerta alerta-erro">
+                    Não foi possível enviar a mensagem. Tente novamente.
+                </div>
+            <?php } ?>
+
             <form action="../controlers/controlerMensagem.php" method="post">
                 <input type="hidden" name="opcao" value="2">
 
@@ -47,7 +61,10 @@ require_once 'includes/cabecalho.inc.php';
                         <option value="">Selecione um destinatário</option>
 
                         <?php foreach ($destinatarios as $destinatario) { ?>
-                            <option value="<?php echo $destinatario->id_usuario; ?>">
+                            <option
+                                    value="<?php echo $destinatario->id_usuario; ?>"
+                                    <?php echo $destinatario->id_usuario == $destinatarioPreSelecionado ? 'selected' : ''; ?>
+                            >
                                 <?php echo htmlspecialchars($destinatario->nome . ' - ' . $destinatario->email); ?>
                             </option>
                         <?php } ?>
@@ -62,6 +79,7 @@ require_once 'includes/cabecalho.inc.php';
                             name="pAssunto"
                             class="form-control"
                             placeholder="Digite o assunto da mensagem"
+                            value="<?php echo htmlspecialchars($assuntoPreSelecionado); ?>"
                             required
                     >
                 </div>

@@ -32,7 +32,13 @@ require_once 'includes/cabecalho.inc.php';
 
                 <div class="form-group">
                     <label>E-mail</label>
-                    <input type="email" name="pEmail" class="form-control" required>
+                    <input
+                            type="email"
+                            name="pEmail"
+                            class="form-control"
+                            value="<?php echo htmlspecialchars($_GET['email'] ?? ''); ?>"
+                            required
+                    >
                 </div>
 
                 <div class="form-group">

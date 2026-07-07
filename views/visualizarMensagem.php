@@ -64,6 +64,11 @@ require_once 'includes/cabecalho.inc.php';
                         Voltar
                     </a>
 
+                    <a href="../controlers/controlerMensagem.php?opcao=1&destinatario=<?php echo $mensagem->id_remetente; ?>&assunto=<?php echo urlencode('Re: ' . $mensagem->assunto); ?>"
+                       class="btn btn-outline">
+                        Responder
+                    </a>
+
                     <a href="../controlers/controlerMensagem.php?opcao=5&id=<?php echo $mensagem->id_mensagem; ?>"
                        onclick="return confirm('Deseja remover essa mensagem?')"
                        class="btn btn-vermelho">
