@@ -8,79 +8,66 @@ $usuario = getUsuarioLogado();
 $totalNaoLidas = $_SESSION['totalNaoLidas'] ?? 0;
 
 $tituloPagina = "WebForum - Área Restrita";
-$paginaCSS = "dashboard.css";
 require_once 'includes/cabecalho.inc.php';
 ?>
 
-    <main class="container">
+<main class="container my-5 flex-grow-1">
 
-        <section class="dashboard-header">
-            <span>Área restrita</span>
+    <div class="p-5 mb-4 bg-dark text-white rounded-3">
+        <span class="text-uppercase small">Área restrita</span>
 
-            <h1>
-                Bem-vindo, <?php echo htmlspecialchars($usuario->nome); ?>!
-            </h1>
+        <h1 class="display-6 fw-bold">
+            Bem-vindo, <?php echo htmlspecialchars($usuario->nome); ?>!
+        </h1>
 
-            <div class="dashboard-contador">
-                <h2>Mensagens não lidas</h2>
-                <p class="numero-dashboard"><?php echo $totalNaoLidas; ?></p>
-            </div>
+        <div class="bg-white bg-opacity-10 rounded-3 p-3 my-3" style="width: fit-content;">
+            <p class="mb-0 small">Mensagens não lidas</p>
+            <p class="display-5 fw-bold mb-0"><?php echo $totalNaoLidas; ?></p>
+        </div>
 
-            <p>
-                Nesta área você pode enviar mensagens para usuários cadastrados,
-                visualizar suas mensagens recebidas e remover mensagens antigas.
-            </p>
-        </section>
+        <p class="mb-0">
+            Nesta área você pode enviar mensagens para usuários cadastrados,
+            visualizar suas mensagens recebidas e remover mensagens antigas.
+        </p>
+    </div>
 
-        <section class="dashboard-cards">
-
-            <a href="../controlers/controlerMensagem.php?opcao=1" class="dashboard-card">
-                <h2>✉ Enviar mensagem</h2>
-
-                <p>
-                    Escreva uma nova mensagem e escolha um destinatário previamente
-                    cadastrado no WebForum.
-                </p>
-            </a>
-
-            <a href="../controlers/controlerMensagem.php?opcao=3" class="dashboard-card">
-                <h2>📥 Mensagens recebidas</h2>
-
-                <p>
-                    Acesse sua caixa de entrada, visualize mensagens completas
-                    e remova mensagens quando necessário.
-                </p>
-            </a>
-            <a href="../controlers/controlerMensagem.php?opcao=6" class="dashboard-card">
-                <h2>📤 Mensagens enviadas</h2>
-
-                <p>
-                    Veja as mensagens que você enviou e acompanhe se o destinatário já leu.
-                </p>
-            </a>
-        </section>
-
-        <section class="dashboard-info">
-            <h2>Resumo do sistema</h2>
-
-            <div class="dashboard-info-grid">
-                <div>
-                    <strong>Autenticação</strong>
-                    <p>Somente usuários logados podem acessar esta área.</p>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="../controlers/controlerMensagem.php?opcao=1" class="card h-100 text-decoration-none text-reset">
+                <div class="card-body">
+                    <h5 class="card-title">Enviar mensagem</h5>
+                    <p class="card-text">
+                        Escreva uma nova mensagem e escolha um destinatário previamente
+                        cadastrado no WebForum.
+                    </p>
                 </div>
+            </a>
+        </div>
 
-                <div>
-                    <strong>Destinatários</strong>
-                    <p>As mensagens são enviadas apenas para usuários cadastrados.</p>
+        <div class="col-md-4">
+            <a href="../controlers/controlerMensagem.php?opcao=3" class="card h-100 text-decoration-none text-reset">
+                <div class="card-body">
+                    <h5 class="card-title">Mensagens recebidas</h5>
+                    <p class="card-text">
+                        Acesse sua caixa de entrada, visualize mensagens completas
+                        e remova mensagens quando necessário.
+                    </p>
                 </div>
+            </a>
+        </div>
 
-                <div>
-                    <strong>Mensagens</strong>
-                    <p>Você pode visualizar e remover suas mensagens recebidas.</p>
+        <div class="col-md-4">
+            <a href="../controlers/controlerMensagem.php?opcao=6" class="card h-100 text-decoration-none text-reset">
+                <div class="card-body">
+                    <h5 class="card-title">Mensagens enviadas</h5>
+                    <p class="card-text">
+                        Veja as mensagens que você enviou e acompanhe se o destinatário já leu.
+                    </p>
                 </div>
-            </div>
-        </section>
+            </a>
+        </div>
+    </div>
 
-    </main>
+</main>
 
 <?php require_once 'includes/rodape.inc.php'; ?>

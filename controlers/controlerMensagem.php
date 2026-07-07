@@ -13,17 +13,15 @@ $idUsuarioLogado = $usuarioLogado->id_usuario;
 $opcao = isset($_REQUEST['opcao']) ? (int) $_REQUEST['opcao'] : 0;
 
 if ($opcao == 1) {
-    $usuarioDAO = new UsuarioDAO();
-    $destinatarios = $usuarioDAO->listarUsuariosExceto($idUsuarioLogado);
-
-    $_SESSION['destinatarios'] = $destinatarios;
-
     $idDestinatario = (int) ($_GET['destinatario'] ?? 0);
+    $nomeDestinatario = $_GET['nome'] ?? '';
     $assunto = $_GET['assunto'] ?? '';
 
     $query = '';
     if ($idDestinatario > 0) {
-        $query = '?destinatario=' . $idDestinatario . '&assunto=' . urlencode($assunto);
+        $query = '?destinatario=' . $idDestinatario
+            . '&nome=' . urlencode($nomeDestinatario)
+            . '&assunto=' . urlencode($assunto);
     }
 
     header("Location: ../views/formMensagem.php" . $query);
@@ -31,44 +29,40 @@ if ($opcao == 1) {
 }
 
 if ($opcao == 2) {
-    $idDestinatario = (int) ($_POST['pDestinatario'] ?? 0);
+    $idsDestinatarios = array_unique(array_map('intval', $_POST['pDestinatario'] ?? []));
     $assunto = trim($_POST['pAssunto'] ?? '');
     $corpo = trim($_POST['pCorpo'] ?? '');
 
-    if ($idDestinatario <= 0 || $assunto === '' || $corpo === '') {
+    if (count($idsDestinatarios) === 0 || $assunto === '' || $corpo === '') {
         header("Location: ../views/formMensagem.php?erro=1");
         exit;
     }
 
     $usuarioDAO = new UsuarioDAO();
-    $destinatarios = $usuarioDAO->listarUsuariosExceto($idUsuarioLogado);
 
-    $destinatarioValido = false;
-    foreach ($destinatarios as $destinatario) {
-        if ($destinatario->id_usuario == $idDestinatario) {
-            $destinatarioValido = true;
-            break;
+    foreach ($idsDestinatarios as $idDestinatario) {
+        if (!$usuarioDAO->existeExceto($idDestinatario, $idUsuarioLogado)) {
+            header("Location: ../views/formMensagem.php?erro=1");
+            exit;
         }
     }
-
-    if (!$destinatarioValido) {
-        header("Location: ../views/formMensagem.php?erro=1");
-        exit;
-    }
-
-    $mensagem = new Mensagem();
-
-    $mensagem->setMensagem(
-        $idUsuarioLogado,
-        $idDestinatario,
-        $assunto,
-        $corpo
-    );
 
     $mensagemDAO = new MensagemDAO();
 
     try {
-        $mensagemDAO->enviarMensagem($mensagem);
+        foreach ($idsDestinatarios as $idDestinatario) {
+            $mensagem = new Mensagem();
+
+            $mensagem->setMensagem(
+                $idUsuarioLogado,
+                $idDestinatario,
+                $assunto,
+                $corpo
+            );
+
+            $mensagemDAO->enviarMensagem($mensagem);
+        }
+
         header("Location: controlerMensagem.php?opcao=3");
         exit;
     } catch (Exception $e) {
@@ -132,5 +126,22 @@ if ($opcao == 7) {
     $_SESSION['mensagemEnviada'] = $mensagem;
 
     header("Location: ../views/visualizarMensagemEnviada.php");
+    exit;
+}
+
+if ($opcao == 8) {
+    $termo = trim($_GET['termo'] ?? '');
+
+    header('Content-Type: application/json');
+
+    if (strlen($termo) < 2) {
+        echo json_encode([]);
+        exit;
+    }
+
+    $usuarioDAO = new UsuarioDAO();
+    $usuarios = $usuarioDAO->buscarPorNomeOuEmail($termo, $idUsuarioLogado);
+
+    echo json_encode($usuarios);
     exit;
 }

@@ -107,7 +107,7 @@ class MensagemDAO
     public function listarEnviadas($idUsuario)
     {
         $sql = $this->con->prepare(
-            "SELECT 
+            "SELECT
             m.id_mensagem,
             m.assunto,
             m.data_envio,
@@ -129,7 +129,7 @@ class MensagemDAO
     public function buscarMensagemEnviada($idMensagem, $idUsuario)
     {
         $sql = $this->con->prepare(
-            "SELECT 
+            "SELECT
             m.id_mensagem,
             m.assunto,
             m.corpo,

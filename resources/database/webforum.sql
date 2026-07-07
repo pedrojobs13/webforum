@@ -56,16 +56,19 @@ CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `senha` varchar(255) NOT NULL
+  `senha` varchar(255) NOT NULL,
+  `role` enum('usuario','admin') NOT NULL DEFAULT 'usuario',
+  `banido` tinyint(1) NOT NULL DEFAULT 0,
+  `motivo_banimento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nome`, `email`, `senha`) VALUES
-(3, 'teste', 'pedro@okngroup.com.br', '$2y$10$OjfnzgRcyZ6Du1kB8uwygOHi51a0rlyAEgaFcDBS4qdriS1VxV7ES'),
-(4, 'pedro', 'pedro@gmail.com', '$2y$10$OgI8etvwUcu7yO6wVTGkweNhRDly2qPtvTAlBGI4RMZkUl7WF3pY.');
+INSERT INTO `usuarios` (`id_usuario`, `nome`, `email`, `senha`, `role`, `banido`, `motivo_banimento`) VALUES
+(3, 'teste', 'pedro@okngroup.com.br', '$2y$10$jScla8SoiP97h/89utqUR.0Rm7HErvLHYhYVxhXUMYOwtcwrE15D6', 'admin', 0, NULL),
+(4, 'pedro', 'pedro@gmail.com', '$2y$10$cJNSljPnKqulwg0XHnGb4e9mK7E3Dbj1rWV9LGAA2K//3xsyu0iOu', 'usuario', 0, NULL);
 
 --
 -- Indexes for dumped tables

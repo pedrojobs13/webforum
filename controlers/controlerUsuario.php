@@ -38,6 +38,11 @@ if ($opcao == 2) {
     $usuarioDAO = new UsuarioDAO();
     $usuario = $usuarioDAO->autenticar($email, $senha);
 
+    if ($usuario != null && (int) $usuario->banido === 1) {
+        header("Location: ../views/formLogin.php?erro=3");
+        exit;
+    }
+
     if ($usuario != null) {
         session_start();
 

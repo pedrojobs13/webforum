@@ -1,49 +1,57 @@
 <?php
 $tituloPagina = "WebForum - Início";
-$paginaCSS = "home.css";
 require_once 'includes/cabecalho.inc.php';
 ?>
 
-    <main class="container">
+<main class="container my-5 flex-grow-1">
 
-        <section class="hero">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <h1 class="display-5 fw-bold">WebForum</h1>
 
-            <h1>WebForum</h1>
+        <p class="col-md-8 fs-4">
+            Sistema de troca de mensagens entre usuários cadastrados,
+            desenvolvido para a disciplina de Desenvolvimento de Sistemas Web.
+        </p>
 
-            <p>
-                Bem-vindo ao WebForum. Este sistema permite que usuários cadastrados
-                troquem mensagens internas de forma simples.
-            </p>
+        <a href="formLogin.php" class="btn btn-primary btn-lg me-2">Entrar</a>
+        <a href="formCadastroUsuario.php" class="btn btn-outline-secondary btn-lg">Cadastrar usuário</a>
+    </div>
 
-            <div class="botoes">
-                <a href="formLogin.php" class="btn btn-azul">Entrar</a>
-                <a href="formCadastroUsuario.php" class="btn btn-outline">Cadastrar usuário</a>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Envio de mensagens</h5>
+                    <p class="card-text">
+                        Envie mensagens para outros usuários cadastrados no sistema.
+                    </p>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <section class="cards">
-            <div class="card">
-                <h3>Envio de mensagens</h3>
-                <p>
-                    Envie mensagens para outros usuários já cadastrados no sistema.
-                </p>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Caixa de entrada</h5>
+                    <p class="card-text">
+                        Veja as mensagens recebidas, com remetente e assunto.
+                    </p>
+                </div>
             </div>
+        </div>
 
-            <div class="card">
-                <h3>Caixa de entrada</h3>
-                <p>
-                    Visualize suas mensagens recebidas, mostrando remetente e assunto.
-                </p>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Área restrita</h5>
+                    <p class="card-text">
+                        Só é possível acessar essas funcionalidades estando logado.
+                    </p>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <div class="card">
-                <h3>Área restrita</h3>
-                <p>
-                    Apenas usuários autenticados podem acessar as funcionalidades internas.
-                </p>
-            </div>
-        </section>
-
-    </main>
+</main>
 
 <?php require_once 'includes/rodape.inc.php'; ?>

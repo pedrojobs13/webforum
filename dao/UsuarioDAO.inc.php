@@ -47,10 +47,61 @@ class UsuarioDAO
         return null;
     }
 
-    public function listarUsuariosExceto($idUsuarioLogado)
+    public function buscarPorNomeOuEmail($termo, $idUsuarioLogado, $limite = 10)
     {
         $sql = $this->con->prepare(
             "SELECT id_usuario, nome, email
+             FROM usuarios
+             WHERE id_usuario <> :id
+             AND banido = 0
+             AND (nome LIKE :termo OR email LIKE :termo)
+             ORDER BY nome
+             LIMIT :limite"
+        );
+
+        $sql->bindValue(':id', $idUsuarioLogado);
+        $sql->bindValue(':termo', '%' . $termo . '%');
+        $sql->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $sql->execute();
+
+        return $sql->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function existeExceto($idUsuario, $idUsuarioLogado)
+    {
+        $sql = $this->con->prepare(
+            "SELECT id_usuario
+             FROM usuarios
+             WHERE id_usuario = :idUsuario
+             AND id_usuario <> :idUsuarioLogado
+             AND banido = 0"
+        );
+
+        $sql->bindValue(':idUsuario', $idUsuario);
+        $sql->bindValue(':idUsuarioLogado', $idUsuarioLogado);
+        $sql->execute();
+
+        return $sql->fetch(PDO::FETCH_OBJ) !== false;
+    }
+
+    public function estaBanido($idUsuario)
+    {
+        $sql = $this->con->prepare(
+            "SELECT banido FROM usuarios WHERE id_usuario = :id"
+        );
+
+        $sql->bindValue(':id', $idUsuario);
+        $sql->execute();
+
+        $resultado = $sql->fetch(PDO::FETCH_OBJ);
+
+        return $resultado && (int) $resultado->banido === 1;
+    }
+
+    public function listarTodosExceto($idUsuarioLogado)
+    {
+        $sql = $this->con->prepare(
+            "SELECT id_usuario, nome, email, role, banido, motivo_banimento
              FROM usuarios
              WHERE id_usuario <> :id
              ORDER BY nome"
@@ -60,5 +111,31 @@ class UsuarioDAO
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function banir($idUsuario, $motivo)
+    {
+        $sql = $this->con->prepare(
+            "UPDATE usuarios
+             SET banido = 1, motivo_banimento = :motivo
+             WHERE id_usuario = :id
+             AND role <> 'admin'"
+        );
+
+        $sql->bindValue(':motivo', $motivo);
+        $sql->bindValue(':id', $idUsuario);
+        $sql->execute();
+    }
+
+    public function desbanir($idUsuario)
+    {
+        $sql = $this->con->prepare(
+            "UPDATE usuarios
+             SET banido = 0, motivo_banimento = NULL
+             WHERE id_usuario = :id"
+        );
+
+        $sql->bindValue(':id', $idUsuario);
+        $sql->execute();
     }
 }
